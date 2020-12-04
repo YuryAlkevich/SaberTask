@@ -8,15 +8,7 @@ namespace SaberTask
     template<typename T, class = std::is_integral<T>>
     std::string ToBinaryString(T value)
     {
-        std::string buffer;
-
-        size_t digitLength = 8 * sizeof(T);
-        size_t startIdx = digitLength - 1;
-
-        while (!(value & 0x1 << startIdx))
-        {
-
-        }
+        std::string buffer(sizeof(T) * 8, '0');
 
         auto strLength = buffer.length();
         for(size_t i = 0, j = strLength - 1; i < strLength; ++i, --j)
