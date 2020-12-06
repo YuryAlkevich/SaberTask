@@ -5,6 +5,3 @@ enable_testing()
 
 add_subdirectory(tasks)
 add_subdirectory(tests)
-
-#add_executable(SaberTaskMain
-#        main.cpp)
