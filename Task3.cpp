@@ -8,10 +8,7 @@ using namespace SaberTask;
 
 struct SerializeNode
 {
-    int64_t prevIdx = -1;
-    int64_t nextIdx = -1;
     int64_t randIdx = -1;
-
     int64_t dataSize = -1;
 };
 
@@ -22,7 +19,7 @@ void List::serialize(std::FILE *file)
 
     std::vector<SerializeNode> nodes(count);
     std::unordered_map<intptr_t, size_t> indexMap;
-    indexMap[0] = -1;
+    indexMap[0] = -1; // for nullptr
 
     // create item address to index association
     auto listPtr = head;
@@ -40,8 +37,6 @@ void List::serialize(std::FILE *file)
     listPtr = head;
     for(size_t i = 0; i < count; i++, listPtr = listPtr->next)
     {
-        nodes[i].prevIdx = i - 1;
-        nodes[i].nextIdx = i + 1;
         nodes[i].dataSize = listPtr->data.size();
 
         auto randKey = reinterpret_cast<intptr_t>(listPtr->rand);
@@ -54,6 +49,9 @@ void List::serialize(std::FILE *file)
 
 void List::deserialize(std::FILE *file)
 {
+    if(!file)
+        return;
+
     std::fread(&count, sizeof(count), 1, file);
 
     auto* nodes = new ListNode[count];
