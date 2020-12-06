@@ -41,6 +41,8 @@ namespace SaberTask
         void serialize(std::FILE *file);
         void deserialize(std::FILE *file);
 
+        size_t size() { return count; }
+
     private:
         ListNode *head = nullptr;
         ListNode *tail = nullptr;
