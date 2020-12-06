@@ -8,4 +8,4 @@ add_executable(SaberTask
         Task1.h
         Task2.h
         Task2.cpp
-        )
+        Task3.cpp Task3.h)
