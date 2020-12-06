@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.17)
-project(SaberTask)
+project(SaberTaskSolution)
 
-set(CMAKE_CXX_STANDARD 11)
+enable_testing()
 
-add_executable(SaberTask
-        main.cpp
-        Task1.h
-        Task2.h
-        Task2.cpp
-        Task3.cpp Task3.h)
+add_subdirectory(tasks)
+add_subdirectory(tests)
+
+#add_executable(SaberTaskMain
+#        main.cpp)

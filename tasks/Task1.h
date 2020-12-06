@@ -13,7 +13,7 @@ namespace SaberTask
         auto strLength = buffer.length();
         for(size_t i = 0, j = strLength - 1; i < strLength; ++i, --j)
         {
-            if(value & (0x1u << i))
+            if(value & (0x1ull << i))
                 buffer[j] = '1';
         }
 

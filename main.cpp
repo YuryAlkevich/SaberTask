@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "Task1.h"
-#include "Task2.h"
-#include "Task3.h"
+#include "Tasks/Task1.h"
+#include "Tasks/Task2.h"
+#include "Tasks/Task3.h"
 
 int main()
 {
