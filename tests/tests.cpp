@@ -39,6 +39,7 @@ TEST(Task3_Tests, SizeIsPreservedAfterDeserialize)
     SaberTask::List newList;
     file = std::fopen("test.bin", "rb");
     newList.deserialize(file);
+    std::fclose(file);
 
     ASSERT_EQ(newList.size(), 3);
 }
@@ -57,6 +58,7 @@ TEST(Task3_Tests, OrderIsPreservedAfterDeserialize)
     SaberTask::List newList;
     file = std::fopen("test.bin", "rb");
     newList.deserialize(file);
+    std::fclose(file);
 
     auto expected = {"PREONE", "ONE", "TWO"};
     auto predicate = [&](const std::string& one, const SaberTask::ListNode& two)
@@ -86,6 +88,7 @@ TEST(Task3_Tests, RandElementsArePreservedAfterDeserialize)
     SaberTask::List newList;
     file = std::fopen("test.bin", "rb");
     newList.deserialize(file);
+    std::fclose(file);
 
     ASSERT_EQ(newList.find("ONE").rand, &newList.find("PREPREONE"));
     ASSERT_EQ(newList.find("TWO").rand, &newList.find("PREPREONE"));

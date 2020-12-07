@@ -38,6 +38,8 @@ namespace SaberTask
 
         using iterator = ListIterator;
 
+        ~List();
+
         ListNode &pushFront(const std::string &data);
 
         ListNode &pushBack(const std::string &data);
@@ -58,6 +60,8 @@ namespace SaberTask
         ListNode *head = nullptr;
         ListNode *tail = nullptr;
         int count = 0;
+
+        void free();
     };
 }
 

@@ -47,23 +47,28 @@ void List::deserialize(std::FILE *file) {
     if (!file)
         return;
 
+    free();
+
     std::fread(&count, sizeof(count), 1, file);
 
-    auto *nodes = new ListNode[count];
+    auto nodes = new ListNode*[count];
+    for(size_t i = 0; i < count; i++)
+        nodes[i] = new ListNode;
+
     SerializeNode serializedNode;
     for (int i = 0; i < count; i++) {
         std::fread(&serializedNode, sizeof(SerializeNode), 1, file);
         std::vector<char> buffer(serializedNode.dataSize);
         std::fread(buffer.data(), buffer.size(), 1, file);
 
-        nodes[i].prev = i - 1 < 0 ? nullptr : &nodes[i - 1];
-        nodes[i].next = i == count - 1 ? nullptr : &nodes[i + 1];
-        nodes[i].rand = serializedNode.randIdx == -1 ? nullptr : &nodes[serializedNode.randIdx];
-        nodes[i].data = std::string(buffer.data(), buffer.size());
+        nodes[i]->prev = i - 1 < 0 ? nullptr : nodes[i - 1];
+        nodes[i]->next = i == count - 1 ? nullptr : nodes[i + 1];
+        nodes[i]->rand = serializedNode.randIdx == -1 ? nullptr : nodes[serializedNode.randIdx];
+        nodes[i]->data = std::string(buffer.data(), buffer.size());
     }
 
-    head = nodes;
-    tail = nodes + count - 1;
+    head = nodes[0];
+    tail = nodes[count - 1];
 }
 
 ListNode &List::pushFront(const std::string &data) {
@@ -116,6 +121,20 @@ List::iterator List::begin() {
 
 List::iterator List::end() {
     return {nullptr};
+}
+
+void List::free() {
+    auto* listPtr = head;
+    while(listPtr != nullptr)
+    {
+        auto* next = listPtr->next;
+        delete listPtr;
+        listPtr = next;
+    }
+}
+
+List::~List() {
+    free();
 }
 
 List::ListIterator::ListIterator(ListNode *node) {
